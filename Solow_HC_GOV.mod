@@ -42,7 +42,7 @@ model;
     [name = 'Savings rule per effective labor']
     saving = (s_k + s_h) * (y + v);
     [name = 'Consume per unit of effective labor from disposable income']
-    c = (1 - s_k - s_h) * (1 - t_k + t_h) * (y + v);
+    c = (1 - s_k - s_h) * (1 - t_k - t_h) * (y + v);
     [name = 'Cobb Douglas production function intensive form']
     y = (k^alpha) * (h^eta);
     [name = 'Fiscal balance']
@@ -55,7 +55,7 @@ initval;
 	k = 0.9 *   ((s_k*(1-t_k))/(n+g+n*g+d_k))^((1-eta)/(1-alpha-eta)) * ((s_h*(1-t_h))/(n+g+n*g+d_h))^((eta)/(1-alpha-eta));
 	h = 0.9 * ((s_h*(1-t_h)*k^alpha)/(n+g+n*g+d_h))^(1/(1-eta));
 	y = (k^alpha) * (h^eta);
-	c = (1 - s_k - s_h) * (1 - t_k + t_h) * y;
+	c = (1 - s_k - s_h) * (1 - t_k - t_h) * y;
 	saving = (s_k + s_h) * y;
     v = (t_k + t_h) * y;
 end;
@@ -66,12 +66,18 @@ endval;
 	k = ((s_k*(1-t_k))/(n+g+n*g+d_k))^((1-eta)/(1-alpha-eta)) * ((s_h*(1-t_h))/(n+g+n*g+d_h))^((eta)/(1-alpha-eta));
 	h = ((s_h*(1-t_h)*k^alpha)/(n+g+n*g+d_h))^(1/(1-eta));
 	y = (k^alpha) * (h^eta);
-	c = (1 - s_k - s_h) * (1 - t_k + t_h) * y;
+	c = (1 - s_k - s_h) * (1 - t_k - t_h) * y;
 	saving = (s_k + s_h) * y;
     v = (t_k + t_h) * y;
 end;
+
 //Steady state
 steady;
+shocks;
+var t_k;
+periods 25:50;
+values 0.07;
+end;
 //Simulation for 150 periods
 simul(periods=150);
 //Plotting variables
